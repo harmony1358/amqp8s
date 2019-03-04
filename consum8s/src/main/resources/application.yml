@@ -1,0 +1,8 @@
+rabbit:
+  queue: "testqueue"
+
+k8s:
+  pod: "CONSUME_POD_NAME"
+
+red:
+  host: http://localhost:9090

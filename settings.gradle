@@ -1,0 +1,5 @@
+rootProject.name = 'amqp8s'
+include ':consum8s'
+include ':front8s'
+include ':red8s'
+

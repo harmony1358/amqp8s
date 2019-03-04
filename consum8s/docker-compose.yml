@@ -1,0 +1,53 @@
+version: '2.1'
+
+services:
+  rabbitmq:
+    image: harmony11/defrabbit:1.0
+    expose:
+      - 5672
+      - 15672
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend
+
+  redis:
+    image: redis
+    expose:
+      - 6379
+    networks:
+      - backend
+
+  red:
+    image: harmony11/red8s:1.2
+    depends_on:
+      - "redis"
+    expose:
+      - 8080
+    ports:
+      - "9090:8080"
+    networks:
+      - backend
+    environment:
+      - "REDIS_HOST=redis"
+
+  front:
+    image: harmony11/front8s:1.2
+    depends_on:
+      - "rabbitmq"
+      - "red"
+    environment:
+      - "RABBIT_ROUTINGKEY=MY_MESSAGE_ROUTING_KEY_YML"
+      - "RABBIT_EXCHANGE=amq.topic"
+      - "K8S_POD=docker-pod"
+      - "SPRING_PROFILES_ACTIVE=swagger"
+      - "SPRING_RABBITMQ_HOST=rabbitmq"
+      - "RED_HOST=http://red:8080"
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+
+networks:
+  backend:

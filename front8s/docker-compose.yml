@@ -1,0 +1,36 @@
+version: '2.1'
+
+services:
+  rabbitmq:
+    image: harmony11/defrabbit:1.0
+    expose:
+      - 5672
+      - 15672
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend
+
+  redis:
+    image: redis
+    expose:
+      - 6379
+    networks:
+      - backend
+
+  red:
+    image: harmony11/red8s:1.2
+    depends_on:
+      - "redis"
+    expose:
+      - 8080
+    ports:
+      - "9090:8080"
+    networks:
+      - backend
+    environment:
+      - "REDIS_HOST=redis"
+
+networks:
+  backend:

@@ -1,0 +1,9 @@
+rabbit:
+  routingKey: "MY_MESSAGE_ROUTING_KEY_YML"
+  exchange: "amq.topic"
+
+k8s:
+  pod: "POD_NAME"
+
+red:
+  host: "http://localhost:9090"
