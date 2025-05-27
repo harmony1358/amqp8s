@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.7.3")
         classpath("se.transmode.gradle:gradle-docker:1.2")
         classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2")
     }
@@ -44,9 +44,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-amqp")
-
     compile("io.springfox:springfox-swagger2:2.6.1")
     compile("io.springfox:springfox-swagger-ui:2.6.1")
+    // Added Spring Native dependency for GraalVM native image support
+    compile("org.springframework.experimental:spring-native:0.11.1")
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
@@ -66,4 +67,10 @@ task wrapper (type: Wrapper) {
 
 bootRun {
     args = ['--spring.profiles.active=swagger']
+}
+
+bootBuildImage {
+    imageName = "front8s:latest"
+    builder = "paketobuildpacks/builder:tiny"
+    environment = ['BP_NATIVE_IMAGE': 'true']
 }
