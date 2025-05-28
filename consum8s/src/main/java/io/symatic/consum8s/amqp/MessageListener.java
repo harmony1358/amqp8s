@@ -22,6 +22,7 @@ public class MessageListener {
 
         Integer counter = restTemplate.getForObject(redHost + "/counter/get", Integer.class);
         log.info("[{}] Consuming message: {}, counter {}", pod, message, counter.intValue());
+        log.warn("[{}] Consuming message: {}, counter {}", pod, message, counter.intValue());
 
     }
 
