@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+  subtract:
+    build: .
+    image: harmony11/subtract8s:1.0
+    ports:
+      - "8081:8080"
+    environment:
+      - "RABBIT_ROUTINGKEY=SUBTRACT_MESSAGE_ROUTING_KEY"
+      - "RABBIT_EXCHANGE=amq.topic"
+      - "K8S_POD=docker-pod-subtract"
+      - "SPRING_PROFILES_ACTIVE=swagger"
+      - "SPRING_RABBITMQ_HOST=rabbitmq"
+      - "RED_HOST=http://red:8080"
