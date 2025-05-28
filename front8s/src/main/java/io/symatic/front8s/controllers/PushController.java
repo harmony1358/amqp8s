@@ -8,20 +8,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for handling push message requests.
+ * 
+ * <p>This class exposes an endpoint to push messages, which delegates
+ * the processing to the PushMessageService.</p>
+ */
 @RestController
 @RequestMapping("api")
 public class PushController {
 
-    PushMessageService pushMessageService;
+    private PushMessageService pushMessageService;
 
+    /**
+     * Constructor for PushController.
+     *
+     * @param pushMessageService Service to process the push message.
+     */
     @Autowired
-    PushController(PushMessageService pushMessageService) {
+    public PushController(PushMessageService pushMessageService) {
         this.pushMessageService = pushMessageService;
     }
 
+    /**
+     * Endpoint to push a message.
+     *
+     * @param message the message body provided in the request.
+     */
     @ApiOperation(value = "Push message")
     @RequestMapping(method = RequestMethod.PUT, value = "/push")
-    public void push (@RequestBody String message) {
+    public void push(@RequestBody String message) {
         pushMessageService.pushMessage(message);
     }
 
