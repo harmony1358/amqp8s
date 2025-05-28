@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: subtract8s
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+rabbit:
+  exchange: amq.topic
+  routingKey: SUBTRACT_MESSAGE_ROUTING_KEY
+
+k8s:
+  pod: ${K8S_POD:local-pod}
+
+red:
+  host: ${RED_HOST:http://localhost:9090}
